@@ -1,11 +1,19 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '@/constants';
 
-export const DashboardScreen: React.FC = () => {
+interface DashboardScreenProps {
+  navigation?: any;
+}
+
+export const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigation }) => {
+  const handleGetStarted = () => {
+    navigation?.navigate('Lesson');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -20,27 +28,27 @@ export const DashboardScreen: React.FC = () => {
             style={styles.statCard}
           >
             <Ionicons name="flame" size={24} color="white" />
-            <Text style={styles.statNumber}>0</Text>
+            <Text style={styles.statNumber}>23</Text>
             <Text style={styles.statLabel}>Day Streak</Text>
           </LinearGradient>
 
           <View style={[styles.statCard, styles.statCardWhite]}>
             <Ionicons name="book" size={24} color={COLORS.primary} />
-            <Text style={[styles.statNumber, styles.statNumberDark]}>0</Text>
+            <Text style={[styles.statNumber, styles.statNumberDark]}>347</Text>
             <Text style={[styles.statLabel, styles.statLabelDark]}>Words Learned</Text>
           </View>
         </View>
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Start Learning</Text>
-          <TouchableOpacity style={styles.startCard}>
+          <TouchableOpacity style={styles.startCard} onPress={handleGetStarted}>
             <Ionicons name="film-outline" size={48} color={COLORS.textSecondary} />
-            <Text style={styles.startTitle}>Choose Your First Movie</Text>
+            <Text style={styles.startTitle}>Toy Story - Scene 1</Text>
             <Text style={styles.startText}>
-              Begin learning languages through movie subtitles
+              Practice with movie subtitles
             </Text>
             <View style={styles.startButton}>
-              <Text style={styles.startButtonText}>Get Started</Text>
+              <Text style={styles.startButtonText}>Continue Learning</Text>
             </View>
           </TouchableOpacity>
         </View>

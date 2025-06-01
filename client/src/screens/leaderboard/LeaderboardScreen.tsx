@@ -6,8 +6,8 @@ import { COLORS } from '@/constants';
 export const LeaderboardScreen: React.FC = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>🏆 Leaderboard</Text>
-      <Text style={styles.subtitle}>Compete with others</Text>
+      <Text style={styles.title}>📚 Leaderboard</Text>
+      <Text style={styles.subtitle}>Coming soon!</Text>
     </SafeAreaView>
   );
 };

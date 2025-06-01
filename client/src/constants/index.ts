@@ -1,6 +1,3 @@
-export const API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL || 'http://localhost:8000';
-export const API_VERSION = process.env.EXPO_PUBLIC_API_VERSION || 'v1';
-
 export const COLORS = {
   primary: '#6366f1',
   secondary: '#8b5cf6',
@@ -14,16 +11,4 @@ export const COLORS = {
   border: '#e5e7eb',
 } as const;
 
-export const ROUTES = {
-  AUTH: {
-    LOGIN: 'Login',
-    REGISTER: 'Register',
-  },
-  MAIN: {
-    DASHBOARD: 'Dashboard',
-    LESSON: 'Lesson',
-    VOCABULARY: 'Vocabulary',
-    LEADERBOARD: 'Leaderboard',
-    PROFILE: 'Profile',
-  },
-} as const;
+export const API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL || 'http://localhost:8000';

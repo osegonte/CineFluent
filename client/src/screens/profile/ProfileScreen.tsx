@@ -6,8 +6,8 @@ import { COLORS } from '@/constants';
 export const ProfileScreen: React.FC = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>👤 Profile</Text>
-      <Text style={styles.subtitle}>Your learning profile</Text>
+      <Text style={styles.title}>📚 Profile</Text>
+      <Text style={styles.subtitle}>Coming soon!</Text>
     </SafeAreaView>
   );
 };

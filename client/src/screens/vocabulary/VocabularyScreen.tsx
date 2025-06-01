@@ -7,7 +7,7 @@ export const VocabularyScreen: React.FC = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>📚 Vocabulary</Text>
-      <Text style={styles.subtitle}>Build your word knowledge</Text>
+      <Text style={styles.subtitle}>Coming soon!</Text>
     </SafeAreaView>
   );
 };

@@ -1,14 +1,23 @@
-// Create src/navigation/MainNavigator.tsx:
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 import { DashboardScreen } from '@/screens/dashboard/DashboardScreen';
 import { VocabularyScreen } from '@/screens/vocabulary/VocabularyScreen';
 import { LeaderboardScreen } from '@/screens/leaderboard/LeaderboardScreen';
 import { ProfileScreen } from '@/screens/profile/ProfileScreen';
+import { LessonScreen } from '@/screens/lesson/LessonScreen';
 import { COLORS } from '@/constants';
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+
+const DashboardStack = () => (
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Screen name="DashboardHome" component={DashboardScreen} />
+    <Stack.Screen name="Lesson" component={LessonScreen} />
+  </Stack.Navigator>
+);
 
 export const MainNavigator: React.FC = () => {
   return (
@@ -36,7 +45,7 @@ export const MainNavigator: React.FC = () => {
         headerShown: false,
       })}
     >
-      <Tab.Screen name="Dashboard" component={DashboardScreen} />
+      <Tab.Screen name="Dashboard" component={DashboardStack} />
       <Tab.Screen name="Vocabulary" component={VocabularyScreen} />
       <Tab.Screen name="Leaderboard" component={LeaderboardScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
