@@ -1,95 +1,176 @@
+// client/src/screens/dashboard/DashboardScreen.tsx - Updated
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
+import { StreakWidget } from '@/components/progress/StreakWidget';
 import { COLORS } from '@/constants';
 
-interface DashboardScreenProps {
-  navigation?: any;
-}
+export const DashboardScreen: React.FC = ({ navigation }: any) => {
+  const continueMovies = [
+    {
+      id: 1,
+      title: "Toy Story",
+      language: "Spanish",
+      difficulty: "Beginner",
+      progress: 65,
+      thumbnail: "🎬"
+    },
+    {
+      id: 2,
+      title: "Finding Nemo",
+      language: "French",
+      difficulty: "Intermediate",
+      progress: 30,
+      thumbnail: "🐠"
+    }
+  ];
 
-export const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigation }) => {
+  const exploreMovies = [
+    {
+      id: 3,
+      title: "Toy Story",
+      language: "Spanish",
+      difficulty: "Beginner",
+      rating: 4.8,
+      duration: "18 min",
+      scenes: "8/12 scenes",
+      progress: 65,
+      thumbnail: "🎬"
+    },
+    {
+      id: 4,
+      title: "Finding Nemo",
+      language: "French",
+      difficulty: "Intermediate",
+      rating: 4.9,
+      duration: "22 min",
+      scenes: "4/15 scenes",
+      progress: 30,
+      thumbnail: "🐠"
+    }
+  ];
+
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {/* Header */}
         <View style={styles.header}>
           <Text style={styles.greeting}>Hello,</Text>
           <Text style={styles.userName}>Language Learner! 👋</Text>
         </View>
 
+        {/* Stats Section */}
         <View style={styles.statsSection}>
-          <LinearGradient colors={[COLORS.primary, COLORS.secondary]} style={styles.statCard}>
-            <Ionicons name="flame" size={24} color="white" />
-            <Text style={styles.statNumber}>23</Text>
-            <Text style={styles.statLabel}>Day Streak</Text>
-          </LinearGradient>
-
-          <View style={[styles.statCard, styles.statCardWhite]}>
-            <Ionicons name="book" size={24} color={COLORS.primary} />
-            <Text style={[styles.statNumber, styles.statNumberDark]}>347</Text>
-            <Text style={[styles.statLabel, styles.statLabelDark]}>Words Learned</Text>
-          </View>
+          <StreakWidget 
+            currentStreak={23}
+            longestStreak={45}
+            wordsLearned={347}
+          />
         </View>
 
+        {/* Continue Learning Section */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Continue Learning</Text>
-          <TouchableOpacity style={styles.movieCard} onPress={() => navigation?.navigate('Lesson')}>
-            <View style={styles.movieIcon}>
-              <Ionicons name="film" size={24} color={COLORS.primary} />
-            </View>
-            <View style={styles.movieInfo}>
-              <Text style={styles.movieTitle}>Toy Story • Scene 1</Text>
-              <Text style={styles.movieSubtitle}>Spanish • Beginner</Text>
-              <View style={styles.progressBar}>
-                <View style={[styles.progressFill, { width: '65%' }]} />
+          {continueMovies.map((movie) => (
+            <TouchableOpacity 
+              key={movie.id}
+              style={styles.continueCard}
+              onPress={() => navigation.navigate('Lesson', {
+                movieTitle: movie.title,
+                sceneTitle: "Woody introduces himself"
+              })}
+            >
+              <View style={styles.movieThumbnail}>
+                <Text style={styles.thumbnailIcon}>{movie.thumbnail}</Text>
               </View>
-              <Text style={styles.progressText}>65% complete</Text>
-            </View>
-            <TouchableOpacity style={styles.playButton} onPress={() => navigation?.navigate('Lesson')}>
-              <Ionicons name="play" size={16} color="white" />
-              <Text style={styles.playButtonText}>Continue</Text>
+              <View style={styles.movieInfo}>
+                <Text style={styles.movieTitle}>{movie.title}</Text>
+                <Text style={styles.movieMeta}>{movie.language} • {movie.difficulty}</Text>
+                <View style={styles.progressContainer}>
+                  <View style={styles.progressBar}>
+                    <View style={[styles.progressFill, { width: `${movie.progress}%` }]} />
+                  </View>
+                  <Text style={styles.progressText}>{movie.progress}%</Text>
+                </View>
+              </View>
+              <TouchableOpacity style={styles.continueButton}>
+                <Ionicons name="play" size={16} color="white" />
+                <Text style={styles.continueButtonText}>Continue</Text>
+              </TouchableOpacity>
             </TouchableOpacity>
-          </TouchableOpacity>
+          ))}
         </View>
 
+        {/* Explore Movies Section */}
         <View style={styles.section}>
-          <TouchableOpacity style={styles.quickStartCard} onPress={() => navigation?.navigate('Lesson')}>
-            <Ionicons name="flash" size={32} color={COLORS.primary} />
-            <Text style={styles.quickStartTitle}>Quick Practice</Text>
-            <Text style={styles.quickStartText}>Start a 5-minute lesson</Text>
-          </TouchableOpacity>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>Explore Movies</Text>
+            <View style={styles.languageFilters}>
+              <TouchableOpacity style={[styles.filterChip, styles.filterChipActive]}>
+                <Text style={styles.filterTextActive}>All</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.filterChip}>
+                <Text style={styles.filterText}>Spanish</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.filterChip}>
+                <Text style={styles.filterText}>French</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.filterChip}>
+                <Text style={styles.filterText}>German</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          {exploreMovies.map((movie) => (
+            <TouchableOpacity 
+              key={movie.id}
+              style={styles.exploreCard}
+              onPress={() => navigation.navigate('Lesson', {
+                movieTitle: movie.title,
+                sceneTitle: "Woody introduces himself"
+              })}
+            >
+              <View style={styles.movieThumbnail}>
+                <Text style={styles.thumbnailIcon}>{movie.thumbnail}</Text>
+              </View>
+              <View style={styles.exploreMovieInfo}>
+                <View style={styles.exploreHeader}>
+                  <Text style={styles.movieTitle}>{movie.title}</Text>
+                  <View style={styles.rating}>
+                    <Ionicons name="star" size={12} color="#ffd700" />
+                    <Text style={styles.ratingText}>{movie.rating}</Text>
+                  </View>
+                </View>
+                <View style={styles.languageBadge}>
+                  <Text style={styles.languageBadgeText}>{movie.language}</Text>
+                  <Text style={styles.difficultyBadgeText}>{movie.difficulty}</Text>
+                </View>
+                <View style={styles.movieStats}>
+                  <View style={styles.statItem}>
+                    <Ionicons name="time-outline" size={14} color={COLORS.textSecondary} />
+                    <Text style={styles.statText}>{movie.duration}</Text>
+                  </View>
+                  <View style={styles.statItem}>
+                    <Ionicons name="film-outline" size={14} color={COLORS.textSecondary} />
+                    <Text style={styles.statText}>{movie.scenes}</Text>
+                  </View>
+                </View>
+                <View style={styles.progressContainer}>
+                  <View style={styles.progressBar}>
+                    <View style={[styles.progressFill, { width: `${movie.progress}%` }]} />
+                  </View>
+                  <Text style={styles.progressText}>{movie.progress}%</Text>
+                </View>
+              </View>
+              <TouchableOpacity style={styles.continueButton}>
+                <Ionicons name="play" size={16} color="white" />
+                <Text style={styles.continueButtonText}>Continue</Text>
+              </TouchableOpacity>
+            </TouchableOpacity>
+          ))}
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: COLORS.background },
-  header: { paddingHorizontal: 20, paddingVertical: 20 },
-  greeting: { fontSize: 16, color: COLORS.textSecondary },
-  userName: { fontSize: 24, fontWeight: 'bold', color: COLORS.text },
-  statsSection: { flexDirection: 'row', paddingHorizontal: 20, gap: 12, marginBottom: 30 },
-  statCard: { flex: 1, padding: 20, borderRadius: 12, alignItems: 'center' },
-  statCardWhite: { backgroundColor: 'white', shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.1, shadowRadius: 4, elevation: 3 },
-  statNumber: { fontSize: 24, fontWeight: 'bold', color: 'white', marginVertical: 8 },
-  statNumberDark: { color: COLORS.text },
-  statLabel: { fontSize: 14, color: 'rgba(255,255,255,0.9)' },
-  statLabelDark: { color: COLORS.textSecondary },
-  section: { paddingHorizontal: 20, marginBottom: 30 },
-  sectionTitle: { fontSize: 20, fontWeight: 'bold', color: COLORS.text, marginBottom: 16 },
-  movieCard: { backgroundColor: 'white', borderRadius: 16, padding: 20, flexDirection: 'row', alignItems: 'center', shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.15, shadowRadius: 8, elevation: 6, marginBottom: 20 },
-  movieIcon: { width: 48, height: 48, borderRadius: 12, backgroundColor: COLORS.background, justifyContent: 'center', alignItems: 'center', marginRight: 16 },
-  movieInfo: { flex: 1 },
-  movieTitle: { fontSize: 16, fontWeight: 'bold', color: COLORS.text, marginBottom: 4 },
-  movieSubtitle: { fontSize: 14, color: COLORS.textSecondary, marginBottom: 8 },
-  progressBar: { height: 4, backgroundColor: COLORS.border, borderRadius: 2, marginBottom: 4 },
-  progressFill: { height: '100%', backgroundColor: COLORS.primary, borderRadius: 2 },
-  progressText: { fontSize: 12, color: COLORS.textSecondary },
-  playButton: { backgroundColor: COLORS.primary, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, paddingVertical: 8, borderRadius: 20, gap: 4 },
-  playButtonText: { color: 'white', fontSize: 14, fontWeight: '600' },
-  quickStartCard: { backgroundColor: 'white', borderRadius: 16, padding: 24, alignItems: 'center', shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.1, shadowRadius: 4, elevation: 3 },
-  quickStartTitle: { fontSize: 18, fontWeight: 'bold', color: COLORS.text, marginTop: 12, marginBottom: 4 },
-  quickStartText: { fontSize: 14, color: COLORS.textSecondary },
-});
