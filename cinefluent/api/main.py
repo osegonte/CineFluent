@@ -3,26 +3,21 @@ Stage 2: FastAPI Main Application for cinefluent
 Core API, Authentication & Gamification Scaffold
 """
 
-from fastapi import FastAPI, Depends, HTTPException, status
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from contextlib import asynccontextmanager
 import uvicorn
-import redis.asyncio as redis
-from sqlalchemy.orm import Session
 
 from cinefluent.database_models import Base
 from cinefluent.api.config import get_settings
 from cinefluent.api.database import get_db, engine, init_redis, DatabaseService
-from cinefluent.auth.routes import auth_router
-from cinefluent.movies.routes import movies_router
-from cinefluent.learning.routes import learning_router
-from cinefluent.gamification.routes import gamification_router
-from cinefluent.users.routes import users_router
+from cinefluent.auth.routes import router as auth_router
+from cinefluent.movies.routes import router as movies_router
+from cinefluent.learning.routes import router as learning_router
+from cinefluent.gamification.routes import router as gamification_router
+from cinefluent.users.routes import router as users_router
 
-# Initialize security
-security = HTTPBearer()
 settings = get_settings()
 
 
@@ -141,6 +136,6 @@ if __name__ == "__main__":
         "cinefluent.api.main:app",
         host=settings.api_host,
         port=settings.api_port,
-        reload=settings.debug,
+        reload=settings.reload,
         log_level=settings.log_level.lower()
     )

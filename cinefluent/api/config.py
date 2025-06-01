@@ -16,6 +16,7 @@ class Settings(BaseSettings):
     debug: bool = False
     api_host: str = "0.0.0.0"
     api_port: int = 8000
+    reload: bool = True  # For development
     
     # Database Configuration
     database_url: str

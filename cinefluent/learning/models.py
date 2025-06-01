@@ -3,7 +3,7 @@ Pydantic models for learning session endpoints
 """
 
 from pydantic import BaseModel, Field
-from typing import List, Optional, Dict
+from typing import List, Optional, Dict, Any
 from datetime import datetime
 import uuid
 
@@ -26,7 +26,7 @@ class VocabularyItem(BaseModel):
     """Vocabulary item with difficulty"""
     word: str
     translation: str
-    difficulty: str = Field(..., regex="^(basic|intermediate|advanced)$")
+    difficulty: str = Field(..., pattern="^(basic|intermediate|advanced)$")
     definition: Optional[str] = None
     example_sentence: Optional[str] = None
 
@@ -47,7 +47,7 @@ class QuizQuestion(BaseModel):
     """Quiz question for vocabulary"""
     question_id: str
     question_text: str
-    question_type: str = Field(..., regex="^(multiple_choice|translation|fill_blank)$")
+    question_type: str = Field(..., pattern="^(multiple_choice|translation|fill_blank)$")
     options: Optional[List[str]] = None  # For multiple choice
     correct_answer: str
     target_word: str
@@ -56,7 +56,7 @@ class QuizQuestion(BaseModel):
 class LessonSession(BaseModel):
     """Learning session request"""
     movie_id: Optional[uuid.UUID] = None
-    difficulty_level: str = Field("beginner", regex="^(beginner|intermediate|advanced)$")
+    difficulty_level: str = Field("beginner", pattern="^(beginner|intermediate|advanced)$")
     session_length: int = Field(20, ge=5, le=50)  # Number of subtitle pairs
 
 
@@ -105,14 +105,14 @@ class ContinueLearning(BaseModel):
     has_active_session: bool
     recommended_movie: Optional[MovieProgress] = None
     recent_movies: List[MovieProgress]
-    new_movie_suggestions: List[Dict[str, any]]
+    new_movie_suggestions: List[Dict[str, Any]]  # Fixed: any -> Any
 
 
 class VocabularyDrill(BaseModel):
     """Vocabulary drilling session"""
     session_id: uuid.UUID
     words: List[VocabularyItem]
-    session_type: str = Field(..., regex="^(review|new_words|mixed)$")
+    session_type: str = Field(..., pattern="^(review|new_words|mixed)$")
     total_questions: int
     
 

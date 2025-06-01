@@ -43,9 +43,9 @@ class Achievement(BaseModel):
     name: str
     description: str
     icon: str
-    difficulty: str = Field(..., regex="^(bronze|silver|gold|platinum)$")
+    difficulty: str = Field(..., pattern="^(bronze|silver|gold|platinum)$")
     requirement: int  # Threshold to unlock
-    category: str = Field(..., regex="^(streak|vocabulary|movies|time)$")
+    category: str = Field(..., pattern="^(streak|vocabulary|movies|time)$")
 
 
 class UserAchievement(BaseModel):
