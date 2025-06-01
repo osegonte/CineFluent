@@ -2,7 +2,7 @@
 Database connection and session management for FastAPI
 """
 
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker, Session
 from typing import Generator
 import redis.asyncio as redis
@@ -78,7 +78,8 @@ class DatabaseService:
         """Check database connectivity"""
         try:
             with SessionLocal() as db:
-                db.execute("SELECT 1")
+                result = db.execute(text("SELECT 1"))
+                result.fetchone()  # Actually fetch the result
                 return {"status": "healthy", "database": "connected"}
         except Exception as e:
             return {"status": "unhealthy", "database": "disconnected", "error": str(e)}
