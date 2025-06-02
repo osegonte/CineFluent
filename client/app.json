@@ -8,15 +8,16 @@
     "splash": {
       "backgroundColor": "#6366f1"
     },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.cinefluent.app"
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#6366f1"
-      },
-      "package": "com.cinefluent.app"
+      }
     },
     "web": {
       "bundler": "metro"

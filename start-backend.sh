@@ -13,20 +13,21 @@ source venv/bin/activate
 
 # Install dependencies
 echo "📦 Installing dependencies..."
-pip install -e .
+pip install -r requirements.txt
 
-# Start database if not running
+# Start database services
 echo "🗄️ Starting database services..."
 docker-compose up -d
 
 # Wait for database
 echo "⏳ Waiting for database to be ready..."
-sleep 5
+sleep 10
 
 # Initialize database
 echo "🔧 Initializing database..."
-python -m cinefluent.ingest init-db
+python init_db.py
 
-# Start API server
+# Start API server using simple script
+echo ""
 echo "🌐 Starting API server..."
-python -m cinefluent.api.main
+python run_api.py
