@@ -1,4 +1,3 @@
-// App.tsx - Updated with proper authentication flow
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
@@ -13,7 +12,6 @@ import { RegisterScreen } from './src/components/auth/RegisterScreen';
 
 // Import main app navigation
 import { MainNavigator } from './src/navigation/MainNavigator';
-import { COLORS } from './src/constants';
 
 const Stack = createStackNavigator();
 
@@ -34,13 +32,13 @@ const LoadingScreen = () => {
       flex: 1, 
       justifyContent: 'center', 
       alignItems: 'center',
-      backgroundColor: COLORS.background 
+      backgroundColor: '#f8fafc'
     }}>
-      <ActivityIndicator size="large" color={COLORS.primary} />
+      <ActivityIndicator size="large" color="#6366f1" />
       <Text style={{ 
         marginTop: 16, 
         fontSize: 16, 
-        color: COLORS.textSecondary 
+        color: '#6b7280'
       }}>
         Loading...
       </Text>
@@ -51,6 +49,8 @@ const LoadingScreen = () => {
 // Main app component that switches between auth and main app
 const AppContent = () => {
   const { isAuthenticated, isLoading } = useAuth();
+
+  console.log('App state:', { isAuthenticated, isLoading });
 
   if (isLoading) {
     return <LoadingScreen />;
