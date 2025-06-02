@@ -1,3 +1,12 @@
+#!/bin/bash
+echo "🧹 Fixing CommunityScreen.tsx and Cleaning Up Project..."
+echo "======================================================"
+
+cd client
+
+# Fix the CommunityScreen.tsx by creating a clean version
+echo "📝 Creating clean CommunityScreen.tsx..."
+cat > src/screens/community/CommunityScreen.tsx << 'EOF'
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -273,3 +282,20 @@ const styles = StyleSheet.create({
     color: COLORS.textSecondary,
   },
 });
+EOF
+
+echo "✅ Fixed CommunityScreen.tsx"
+
+# Clean up irrelevant shell files
+echo "🧹 Cleaning up irrelevant shell files..."
+cd ..
+rm -f complete_project_fix.sh simple_expo_fix.sh web_only_start.sh fix_backend_setup.sh cleanup_and_stage3.sh build_authentication.sh update_app_with_auth.sh setup_auth_components.sh start-backend.sh start-frontend.sh start_frontend_test.sh test_backend_health.sh update_app_with_auth.sh setup_frontend_auth.sh fix_expo_dependencies.sh fix_expo_final.sh
+
+echo "✅ Cleaned up shell scripts"
+
+echo ""
+echo "🎯 Project cleaned up!"
+echo "📁 Now try starting Expo again:"
+echo "   cd client"
+echo "   npx expo start"
+echo "   Press 'w' for web"

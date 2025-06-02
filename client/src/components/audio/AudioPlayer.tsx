@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { COLORS } from '@/constants';
 
 export const AudioPlayer: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <LinearGradient colors={[COLORS.primary, COLORS.secondary]} style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.controls}>
         <TouchableOpacity style={styles.controlButton}>
           <Ionicons name="play-skip-back" size={24} color="white" />
@@ -36,12 +35,13 @@ export const AudioPlayer: React.FC = () => {
       
       <Text style={styles.audioText}>Audio Player</Text>
       <Text style={styles.timestamp}>00:01:23 / 00:03:45</Text>
-    </LinearGradient>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#6366f1', // Solid color instead of gradient
     borderRadius: 12,
     padding: 20,
     alignItems: 'center',
