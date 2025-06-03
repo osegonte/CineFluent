@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ViewStyle, TextStyle } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '@/constants';
 
@@ -45,8 +45,8 @@ export const QuizCard: React.FC<QuizCardProps> = ({
 
       <View style={styles.optionsContainer}>
         {options.map((option) => {
-          let buttonStyle = styles.optionButton;
-          let textStyle = styles.optionText;
+          let buttonStyle: ViewStyle[] = [styles.optionButton];
+          let textStyle: TextStyle[] = [styles.optionText];
 
           if (showResult && selectedOption === option.id) {
             if (option.isCorrect) {

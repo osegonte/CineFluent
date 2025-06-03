@@ -1,10 +1,10 @@
-// client/src/screens/dashboard/DashboardScreen.tsx - Updated
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { StreakWidget } from '@/components/progress/StreakWidget';
-import { COLORS } from '@/constants';
+import { StreakWidget } from '../../components/progress/StreakWidget';
+import { COLORS } from '../../constants';
+import { styles } from './DashboardScreen.styles';
 
 export const DashboardScreen: React.FC = ({ navigation }: any) => {
   const continueMovies = [

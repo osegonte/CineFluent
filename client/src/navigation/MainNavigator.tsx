@@ -1,4 +1,3 @@
-// client/src/navigation/MainNavigator.tsx - Updated
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -40,7 +39,7 @@ export const MainNavigator: React.FC = () => {
           } else if (route.name === 'Profile') {
             iconName = focused ? 'person' : 'person-outline';
           } else {
-            iconName = 'circle';
+            iconName = 'ellipse';
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;

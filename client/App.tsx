@@ -12,6 +12,7 @@ import { RegisterScreen } from './src/components/auth/RegisterScreen';
 
 // Import main app navigation
 import { MainNavigator } from './src/navigation/MainNavigator';
+import { COLORS } from './src/constants';
 
 const Stack = createStackNavigator();
 
@@ -32,15 +33,15 @@ const LoadingScreen = () => {
       flex: 1, 
       justifyContent: 'center', 
       alignItems: 'center',
-      backgroundColor: '#f8fafc'
+      backgroundColor: COLORS.background 
     }}>
-      <ActivityIndicator size="large" color="#6366f1" />
+      <ActivityIndicator size="large" color={COLORS.primary} />
       <Text style={{ 
         marginTop: 16, 
         fontSize: 16, 
-        color: '#6b7280'
+        color: COLORS.textSecondary 
       }}>
-        Loading...
+        Loading CineFluent...
       </Text>
     </View>
   );
@@ -49,8 +50,6 @@ const LoadingScreen = () => {
 // Main app component that switches between auth and main app
 const AppContent = () => {
   const { isAuthenticated, isLoading } = useAuth();
-
-  console.log('App state:', { isAuthenticated, isLoading });
 
   if (isLoading) {
     return <LoadingScreen />;

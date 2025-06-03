@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:16
+    container_name: cinefluent_db
+    environment:
+      POSTGRES_DB: cinefluent
+      POSTGRES_USER: cinefluent_user
+      POSTGRES_PASSWORD: cinefluent_pass
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cinefluent_user -d cinefluent"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: cinefluent_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+
+  # Backend API
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: cinefluent_api
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://cinefluent_user:cinefluent_pass@db:5432/cinefluent
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    volumes:
+      - ./backend:/app
+    command: python run_fixed_api.py
+
+volumes:
+  postgres_data:
+  redis_data:
